@@ -8,6 +8,15 @@ import {
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
+import {
+  SignedIn,
+  SignedOut,
+  SignIn,
+  SignInButton,
+  SignUp,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
 
 const Logo = () => {
   return (
@@ -45,24 +54,24 @@ const Header = () => {
               <span>Explore</span>
             </Link>
             <div className="flex items-center gap-3">
-              {isSignedIn ? (
-                <>
-                  <Button asChild>
-                    <Link href="/submit">
-                      <SparklesIcon size={4} />
-                      submit Project
-                    </Link>
-                  </Button>
-                  <Button variant="ghost">
-                    <UserIcon size={4} />
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button variant="ghost">Sign In</Button>
-                  <Button>Sign Up</Button>
-                </>
-              )}
+              <SignedOut>
+                <SignInButton />
+                <SignUpButton>
+                  <button className="bg-[#6c47ff] text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
+                    Sign Up
+                  </button>
+                </SignUpButton>
+              </SignedOut>
+              {/* Show the user button when the user is signed in */}
+              <SignedIn>
+                <Button asChild>
+                  <Link href="/submit">
+                    <SparklesIcon size={4} />
+                    submit Project
+                  </Link>
+                </Button>
+                <UserButton />
+              </SignedIn>
             </div>
           </nav>
         </div>

@@ -1,7 +1,15 @@
-import React from "react";
+import FeatureProducts from "@/components/landing-page/feature-products";
+import HeroSection from "@/components/landing-page/hero-section";
+import RecentlyLaunchedProducts from "@/components/landing-page/recently-launched-products";
 
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <div>
+      <HeroSection />
+      <FeatureProducts />
+      <RecentlyLaunchedProducts />
+    </div>
+  );
 };
 
 export default Home;

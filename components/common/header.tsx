@@ -1,12 +1,13 @@
 import {
   CompassIcon,
   HomeIcon,
+  LoaderIcon,
   SparkleIcon,
   SparklesIcon,
   UserIcon,
 } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 import { Button } from "../ui/button";
 import {
   SignedIn,
@@ -54,24 +55,32 @@ const Header = () => {
               <span>Explore</span>
             </Link>
             <div className="flex items-center gap-3">
-              <SignedOut>
-                <SignInButton />
-                <SignUpButton>
-                  <button className="bg-[#6c47ff] text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
-                    Sign Up
-                  </button>
-                </SignUpButton>
-              </SignedOut>
-              {/* Show the user button when the user is signed in */}
-              <SignedIn>
-                <Button asChild>
-                  <Link href="/submit">
-                    <SparklesIcon size={4} />
-                    submit Project
-                  </Link>
-                </Button>
-                <UserButton />
-              </SignedIn>
+              <Suspense
+                fallback={
+                  <div>
+                    <LoaderIcon className="size-4 animate-spin" />
+                  </div>
+                }
+              >
+                <SignedOut>
+                  <SignInButton />
+                  <SignUpButton>
+                    <button className="bg-[#6c47ff] text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
+                      Sign Up
+                    </button>
+                  </SignUpButton>
+                </SignedOut>
+                {/* Show the user button when the user is signed in */}
+                <SignedIn>
+                  <Button asChild>
+                    <Link href="/submit">
+                      <SparklesIcon size={4} />
+                      submit Project
+                    </Link>
+                  </Button>
+                  <UserButton />
+                </SignedIn>
+              </Suspense>
             </div>
           </nav>
         </div>

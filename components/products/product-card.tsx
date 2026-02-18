@@ -10,21 +10,17 @@ import { Badge } from "../ui/badge";
 import { ChevronDownIcon, ChevronUpIcon, StarIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import { InferSelectModel } from "drizzle-orm";
+import { products } from "@/db/schema";
 
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  tags: string[];
-  votes: number;
-  isFeatured: boolean;
-}
+type Product = InferSelectModel<typeof products>;
 
 const ProductCard = ({ product }: { product: Product }) => {
   const hasVoted = false;
+  const tags = Array.isArray(product.tag) ? product.tag : [];
   return (
     <Link href={`/products/${product.id}`}>
-      <Card className="group hover:bg-primary-foreground/10 border-solid border-gray-400 min-h-45">
+      <Card className="group hover:bg-primary-foreground/10 border-solid border-gray-400 min-h-45 hover:scale-105 transition-all duration-200">
         <CardHeader className="flex-1">
           <div className="flex items-start gap-4">
             <div className="flex-1 min-w-0">
@@ -32,7 +28,7 @@ const ProductCard = ({ product }: { product: Product }) => {
                 <CardTitle className="text-lg group-hover:text-primary transition-colors">
                   {product.name}
                 </CardTitle>
-                {product.isFeatured && (
+                {product.voteCount > 100 && (
                   <Badge className="gap-1 bg-primary text-primary-foreground">
                     <StarIcon className="size-3 fill-current" />
                     Featured
@@ -55,7 +51,7 @@ const ProductCard = ({ product }: { product: Product }) => {
                 <ChevronUpIcon className="size-5" />
               </Button>
               <span className="text-sm font-semibold transition-colors text-foreground">
-                10
+                {product.voteCount}
               </span>
               <Button
                 variant="ghost"
@@ -74,9 +70,9 @@ const ProductCard = ({ product }: { product: Product }) => {
         </CardHeader>
         <CardFooter>
           <div className="flex items-center gap-2">
-            {product.tags.map((tag) => (
-              <Badge variant="secondary" key={tag}>
-                {tag}
+            {tags.map((tags) => (
+              <Badge variant="secondary" key={tags}>
+                {tags}
               </Badge>
             ))}
           </div>

@@ -18,7 +18,7 @@ const ProductCard = ({ product }: { product: Product }) => {
   const hasVoted = false;
   const tags = Array.isArray(product.tag) ? product.tag : [];
   return (
-    <Link href={`/products/${product.id}`}>
+    <Link href={`/products/${product.slug}`}>
       <Card className="group hover:bg-primary-foreground/10 border-solid border-gray-400 min-h-45 hover:scale-105 transition-all duration-200">
         <CardHeader className="flex-1">
           <div className="flex items-start gap-4">

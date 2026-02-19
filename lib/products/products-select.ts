@@ -19,8 +19,7 @@ export async function getAllProducts() {
     .select()
     .from(products)
     .where(eq(products.status, "approved"))
-    .orderBy(desc(products.voteCount))
-    .limit(6);
+    .orderBy(desc(products.voteCount));
 
   return productsData;
 }
@@ -35,4 +34,12 @@ export async function getRecentlyLaunchedProducts() {
       product.createdAt &&
       new Date(product.createdAt.toISOString()) >= oneWeekAgo,
   );
+}
+
+export async function getProductBySlug(slug: string) {
+  const product = await db
+    .select()
+    .from(products)
+    .where(eq(products.slug, slug));
+  return product?.[0] ?? null;
 }

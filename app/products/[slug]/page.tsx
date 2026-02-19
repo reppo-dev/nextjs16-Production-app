@@ -6,13 +6,7 @@ import {
   getFeaturedProducts,
   getProductBySlug,
 } from "@/lib/products/products-select";
-import {
-  ArrowLeftIcon,
-  CalendarIcon,
-  ExternalLinkIcon,
-  StarIcon,
-  UserIcon,
-} from "lucide-react";
+import { ArrowLeftIcon, CalendarIcon, StarIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -32,7 +26,7 @@ const Product = async ({ params }: { params: Promise<{ slug: string }> }) => {
     notFound();
   }
 
-  const { name, description, tagline, websiteUrl, tag, voteCount } = product;
+  const { name, tagline, websiteUrl, voteCount } = product;
 
   const tags = Array.isArray(product.tag) ? product.tag : [];
   const hasVoted = false;

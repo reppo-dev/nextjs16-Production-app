@@ -1,6 +1,5 @@
 import SectionHeader from "@/components/common/section-header";
 import { SparklesIcon } from "lucide-react";
-import React from "react";
 import ProductSubmitForm from "./product-submit-form";
 
 const SubmitPage = () => {

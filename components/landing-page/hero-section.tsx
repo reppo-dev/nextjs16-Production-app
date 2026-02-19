@@ -4,7 +4,6 @@ import Link from "next/link";
 import {
   ArrowRightIcon,
   EyeIcon,
-  LucideIcon,
   RocketIcon,
   SparklesIcon,
   UserIcon,

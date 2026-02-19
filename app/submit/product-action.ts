@@ -6,7 +6,7 @@ import z from "zod";
 import { db } from "@/db";
 import { products } from "@/db/schema";
 import { eq, sql } from "drizzle-orm";
-import { refresh, revalidatePath } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 export type FormState = {
   success: boolean;

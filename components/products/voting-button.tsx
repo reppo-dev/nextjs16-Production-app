@@ -5,12 +5,7 @@ import {
 } from "@/app/submit/product-action";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  Loader2,
-  Loader2Icon,
-} from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon, Loader2Icon } from "lucide-react";
 import { useOptimistic, useTransition } from "react";
 
 const VotingButton = ({

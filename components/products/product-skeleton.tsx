@@ -1,4 +1,3 @@
-import { getRecentlyLaunchedProducts } from "@/lib/products/products-select";
 import { Skeleton } from "../ui/skeleton";
 
 const ProductSkeleton = async () => {

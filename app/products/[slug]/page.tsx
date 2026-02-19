@@ -75,7 +75,7 @@ const Product = async ({ params }: { params: Promise<{ slug: string }> }) => {
                     {
                       label: "Launched:",
                       value: new Date(
-                        product.createdAt?.toISOString() ?? "",
+                        product.createdAt ?? "",
                       ).toLocaleDateString(),
                       icon: CalendarIcon,
                     },

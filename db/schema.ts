@@ -3,17 +3,17 @@ import {
   integer,
   json,
   pgTable,
-  serial,
   text,
   timestamp,
   uniqueIndex,
+  uuid,
   varchar,
 } from "drizzle-orm/pg-core";
 
 export const products = pgTable(
   "products",
   {
-    id: serial("id").primaryKey(),
+    id: uuid("id").primaryKey(),
     name: varchar("name", { length: 120 }).notNull(),
     slug: varchar("slug", { length: 140 }).notNull(),
     tagline: varchar("tagline", { length: 200 }).notNull(),

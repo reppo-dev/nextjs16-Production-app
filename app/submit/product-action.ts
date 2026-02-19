@@ -5,6 +5,8 @@ import { productSchema } from "../../components/products/product-validation";
 import z from "zod";
 import { db } from "@/db";
 import { products } from "@/db/schema";
+import { eq, sql } from "drizzle-orm";
+import { refresh, revalidatePath } from "next/cache";
 
 export type FormState = {
   success: boolean;
@@ -12,7 +14,7 @@ export type FormState = {
   message: string;
 };
 
-const addProduct = async (
+export const addProduct = async (
   _prevState: FormState,
   formData: FormData,
 ): Promise<FormState> => {
@@ -95,4 +97,79 @@ const addProduct = async (
   }
 };
 
-export default addProduct;
+export const upvoteProductAction = async (productId: string) => {
+  try {
+    const { userId, orgId } = await auth();
+
+    if (!userId) {
+      return {
+        success: false,
+        message: "You must be signed in to submit a product",
+      };
+    }
+
+    if (!orgId) {
+      return {
+        success: false,
+        message: "You must be a member of an organization to submit a product",
+      };
+    }
+
+    await db
+      .update(products)
+      .set({ voteCount: sql`GREATEST(0,${products.voteCount} + 1)` })
+      .where(eq(products.id, productId));
+
+    revalidatePath("/");
+    return {
+      success: true,
+      message: "successe to upvote product",
+      voteCount: +1,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: "Failed to upvote product",
+      voteCount: 0,
+    };
+  }
+};
+
+export const downvoteProductAction = async (productId: string) => {
+  try {
+    const { userId, orgId } = await auth();
+
+    if (!userId) {
+      return {
+        success: false,
+        message: "You must be signed in to submit a product",
+      };
+    }
+
+    if (!orgId) {
+      return {
+        success: false,
+        message: "You must be a member of an organization to submit a product",
+      };
+    }
+
+    await db
+      .update(products)
+      .set({ voteCount: sql`GREATEST(0,${products.voteCount} - 1)` })
+      .where(eq(products.id, productId));
+    revalidatePath("/");
+    return {
+      success: true,
+      message: "successe to downvote product",
+      voteCount: -1,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: "Failed to downvote product",
+      voteCount: 0,
+    };
+  }
+};

@@ -11,11 +11,12 @@ import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 import { Textarea } from "../../components/ui/textarea";
 import { LoaderIcon, SparkleIcon } from "lucide-react";
-import addProduct, { FormState } from "./product-action";
+import { addProduct } from "./product-action";
+import { FormState } from "./product-action";
 
 const initialState: FormState = {
   success: false,
-  errors: {},
+  errors: undefined,
   message: "",
 };
 
@@ -37,6 +38,9 @@ const ProductSubmitForm = () => {
             placeholder="My Awesome Product"
             required
           />
+          {(state.errors?.name || []).map((err) => (
+            <FieldDescription key={err}>{err}</FieldDescription>
+          ))}
         </Field>
         <Field>
           <FieldLabel htmlFor="slug">Slug</FieldLabel>

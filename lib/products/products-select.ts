@@ -19,8 +19,8 @@ export async function getAllProducts() {
     .select()
     .from(products)
     .where(eq(products.status, "approved"))
-    .orderBy(desc(products.voteCount));
-  // .limit(6);
+    .orderBy(desc(products.voteCount))
+    .limit(6);
 
   return productsData;
 }

@@ -4,20 +4,12 @@ import {
   LoaderIcon,
   SparkleIcon,
   SparklesIcon,
-  UserIcon,
 } from "lucide-react";
 import Link from "next/link";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { Button } from "../ui/button";
-import {
-  SignedIn,
-  SignedOut,
-  SignIn,
-  SignInButton,
-  SignUp,
-  SignUpButton,
-  UserButton,
-} from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
+import CustomUserButton from "./custom-user-button";
 
 const Logo = () => {
   return (
@@ -78,7 +70,7 @@ const Header = () => {
                       submit Project
                     </Link>
                   </Button>
-                  <UserButton />
+                  <CustomUserButton />
                 </SignedIn>
               </Suspense>
             </div>

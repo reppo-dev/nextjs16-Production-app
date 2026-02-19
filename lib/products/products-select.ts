@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { products } from "@/db/schema";
 import { desc, eq } from "drizzle-orm";
+import { unstable_cache } from "next/cache";
 
 export async function getFeaturedProducts() {
   "use cache";
@@ -36,10 +37,15 @@ export async function getRecentlyLaunchedProducts() {
   );
 }
 
-export async function getProductBySlug(slug: string) {
-  const product = await db
-    .select()
-    .from(products)
-    .where(eq(products.slug, slug));
-  return product?.[0] ?? null;
-}
+export const getProductBySlug = unstable_cache(
+  async (slug: string) => {
+    const product = await db
+      .select()
+      .from(products)
+      .where(eq(products.slug, slug));
+
+    return product?.[0] ?? null;
+  },
+  ["product-by-slug"],
+  { revalidate: 600 },
+);
